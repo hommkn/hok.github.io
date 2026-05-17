@@ -268,6 +268,7 @@
             </div>
             <div class="action-row">
               <button class="btn btn-primary" id="download-btn">⬇ Download PNG</button>
+              <button class="btn btn-primary" id="download-pdf-btn">📄 Download PDF</button>
               <button class="btn btn-secondary" id="copy-list-btn">📋 Copy shopping list</button>
               <button class="btn btn-secondary" id="reset-btn">↺ Try another photo</button>
             </div>
@@ -321,8 +322,9 @@
     </div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
   <script>
-    const dropzone=document.getElementById('dropzone'),fileInput=document.getElementById('file-input'),previewArea=document.getElementById('preview-area'),originalPreview=document.getElementById('original-preview'),outputCanvas=document.getElementById('output-canvas'),sizeSlider=document.getElementById('size-slider'),sizeValue=document.getElementById('size-value'),downloadBtn=document.getElementById('download-btn'),copyListBtn=document.getElementById('copy-list-btn'),resetBtn=document.getElementById('reset-btn'),exampleThumbs=document.querySelectorAll('.example-thumb'),totalBeadsEl=document.getElementById('total-beads'),beadColorListEl=document.getElementById('bead-color-list');
+    const dropzone=document.getElementById('dropzone'),fileInput=document.getElementById('file-input'),previewArea=document.getElementById('preview-area'),originalPreview=document.getElementById('original-preview'),outputCanvas=document.getElementById('output-canvas'),sizeSlider=document.getElementById('size-slider'),sizeValue=document.getElementById('size-value'),downloadBtn=document.getElementById('download-btn'),downloadPdfBtn=document.getElementById('download-pdf-btn'),copyListBtn=document.getElementById('copy-list-btn'),resetBtn=document.getElementById('reset-btn'),exampleThumbs=document.querySelectorAll('.example-thumb'),totalBeadsEl=document.getElementById('total-beads'),beadColorListEl=document.getElementById('bead-color-list');
     let sourceImage=null,lastCountsByCode=new Map();
     document.getElementById('year').textContent=new Date().getFullYear();
 
@@ -474,6 +476,36 @@
       if(!sourceImage)return;
       try{const link=document.createElement('a');link.download='beadsnap-pattern.png';link.href=outputCanvas.toDataURL('image/png');link.click()}
       catch(err){alert('Could not download this image. If you loaded an example, try uploading your own photo instead.')}
+    });
+
+    downloadPdfBtn.addEventListener('click',()=>{
+      if(!outputCanvas||outputCanvas.width===0)return;
+      const {jsPDF}=window.jspdf;
+      const pdf=new jsPDF({orientation:outputCanvas.width>outputCanvas.height?'landscape':'portrait',unit:'px',format:[outputCanvas.width+40,outputCanvas.height+40]});
+      pdf.addImage(outputCanvas.toDataURL('image/png'),'PNG',20,20,outputCanvas.width,outputCanvas.height);
+      if(lastCountsByCode.size>0){
+        const sorted=[...lastCountsByCode.entries()].sort((a,b)=>{if(b[1]!==a[1])return b[1]-a[1];return a[0].localeCompare(b[0])});
+        let y=outputCanvas.height+50;
+        const pageW=outputCanvas.width+40;
+        pdf.addPage([pageW,Math.max(pageW,y+20)]);
+        pdf.setFontSize(14);pdf.setTextColor('#3A3530');
+        pdf.text('BeadSnap Shopping List',20,30);
+        pdf.setFontSize(11);pdf.setTextColor('#6B635C');
+        pdf.text('Color  —  Count  —  Code',20,50);
+        let lineY=64;
+        for(const[code,count]of sorted){
+          const info=PALETTE_BY_CODE.get(code);if(!info)continue;
+          pdf.text(`${info.name}`,20,lineY);
+          pdf.text(`x${count.toLocaleString()}`,170,lineY);
+          pdf.text(`${code}`,240,lineY);
+          lineY+=14;
+          if(lineY>pageW-20){pdf.addPage([pageW,pageW]);lineY=20}
+        }
+        const total=sorted.reduce((s,[,c])=>s+c,0);
+        pdf.setFontSize(12);pdf.setTextColor('#E85F4E');
+        pdf.text(`Total: ${total.toLocaleString()} beads`,20,lineY+12);
+      }
+      pdf.save('beadsnap-pattern.pdf');
     });
 
     resetBtn.addEventListener('click',()=>{
