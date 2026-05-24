@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BeadSnap — Free Photo to Perler Bead Pattern Maker</title>
-  <meta name="description" content="Turn any photo into a Perler bead pattern for free. Runs entirely in your browser — your images never leave your device. Perfect for crafters and parents." />
+  <meta name="description" content="Turn your own photo into a printable Perler bead pattern for free, with bead counts and a shopping list. Unlock Pro Pattern for smarter automatic cropping, color matching, and cleaner PDFs." />
   <meta name="keywords" content="perler bead pattern, photo to bead, pixel art, fuse bead, hama bead, crafting tool, free pattern maker" />
   <meta name="author" content="BeadSnap" />
   <link rel="canonical" href="https://beadsnap.app/" />
@@ -14,7 +14,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://beadsnap.app/" />
   <meta property="og:title" content="BeadSnap — Free Photo to Perler Bead Pattern Maker" />
-  <meta property="og:description" content="Turn any photo into a Perler bead pattern for free. Runs entirely in your browser — your images never leave your device." />
+  <meta property="og:description" content="Turn your own photo into a printable bead pattern with bead counts, a shopping list, and optional Pro Pattern upgrades." />
   <meta property="og:image" content="https://beadsnap.app/images/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -32,7 +32,7 @@
     "@type": "WebApplication",
     "name": "BeadSnap",
     "url": "https://beadsnap.app/",
-    "description": "Free browser-based tool to convert photos into Perler bead patterns. Images are processed locally for privacy.",
+    "description": "Free browser-based tool to convert your own photos into printable Perler bead patterns with bead counts and a shopping list. Images are processed locally for privacy.",
     "applicationCategory": "DesignApplication",
     "operatingSystem": "Any (web browser)",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
@@ -92,6 +92,13 @@
     .btn-primary:active{transform:translateY(2px);box-shadow:0 0 0 var(--coral-dark)}
     .btn-secondary{background:#fff;color:var(--ink);border:2px solid var(--line)}
     .btn-secondary:hover{border-color:var(--teal);color:var(--teal-dark)}
+    .lead-magnet{margin:20px auto 0;padding:22px 24px;border:2px solid var(--line);border-radius:var(--radius-sm);background:var(--bg-cream-soft);max-width:720px;text-align:center}
+    .lead-magnet h3{margin-bottom:6px;color:var(--ink)}
+    .lead-magnet p{max-width:560px;margin:0 auto 16px}
+    .lead-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+    .lead-form input[type="email"]{min-height:48px;min-width:260px;flex:1 1 260px;max-width:360px;border:2px solid var(--line);border-radius:999px;padding:0 18px;font:inherit;color:var(--ink);background:#fff}
+    .lead-form-note{font-size:.88rem;margin:0;color:var(--ink-soft)}
+    .lead-form-note a{font-weight:800}
 
     /* EXAMPLES */
     .examples-section{padding:40px 0;text-align:center}
@@ -142,6 +149,9 @@
     .control-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
     .control-row label{font-weight:700;min-width:120px}
     .control-row .value-badge{background:var(--coral);color:#fff;padding:4px 12px;border-radius:999px;font-weight:700;font-size:.9rem;min-width:72px;text-align:center}
+    .control-row-compact{margin-top:14px}
+    .control-row-compact input[type="checkbox"]{width:22px;height:22px;accent-color:var(--coral);cursor:pointer}
+    .control-help{font-size:.9rem;color:var(--ink-soft)}
     input[type="range"]{flex:1;min-width:160px;-webkit-appearance:none;appearance:none;height:8px;background:var(--line);border-radius:999px;outline:none;cursor:pointer}
     input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;background:var(--coral);border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.15)}
     input[type="range"]::-moz-range-thumb{width:24px;height:24px;background:var(--coral);border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.15)}
@@ -160,6 +170,10 @@
     .story-section{padding:64px 0;text-align:center}
     .story-section .container{max-width:680px}
     .story-section .privacy-badge{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;padding:8px 16px;border-radius:999px;font-weight:700;font-size:.9rem;margin-top:16px}
+    .product-cta-section{padding:56px 0;background:var(--bg-cream-soft);border-top:1px solid var(--line);text-align:center}
+    .product-cta-section .container{max-width:760px}
+    .product-cta-box{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px}
+    .product-cta-box p{max-width:580px;margin-left:auto;margin-right:auto}
 
     /* FOOTER */
     footer.site-footer{background:var(--ink);color:var(--bg-cream);padding:40px 0;text-align:center}
@@ -182,6 +196,8 @@
       <nav class="site-nav" aria-label="Main navigation">
         <a href="index.html" class="is-active">Home</a>
         <a href="blog.html">Blog</a>
+        <a href="free-patterns.html" data-free-patterns-link data-location="nav">Free Patterns</a>
+        <a href="custom-pattern.html" data-pro-pattern-link data-location="nav">Pro Pattern</a>
         <a href="about.html">About</a>
         <a href="privacy.html">Privacy</a>
         <a href="contact.html">Contact</a>
@@ -194,7 +210,7 @@
     <section class="hero">
       <div class="container">
         <h1>Turn any photo into a <span class="accent">Perler bead</span> pattern</h1>
-        <p class="lead">Free, fun, and friendly. Upload a photo and BeadSnap instantly turns it into a pixel-perfect bead pattern you can craft at home with your kids.</p>
+        <p class="lead">Upload your own photo and get a printable bead pattern, color-matched bead counts, and a shopping list. The free tool runs in your browser; Pro Pattern adds smarter automatic cleanup for $5.</p>
         <div class="hero-cta">
           <a href="#tool" class="btn btn-primary">Get started — it's free</a>
           <a href="#how-it-works" class="btn btn-secondary">See how it works</a>
@@ -259,6 +275,11 @@
                 <input type="range" id="size-slider" min="16" max="128" value="48" step="1" aria-label="Pixel grid size, in beads per side" />
                 <span class="value-badge"><span id="size-value">48</span> beads</span>
               </div>
+              <div class="control-row control-row-compact">
+                <label for="crop-toggle">Crop to subject</label>
+                <input type="checkbox" id="crop-toggle" checked aria-label="Automatically crop around the main subject" />
+                <span class="control-help">Makes the photo subject larger in the bead pattern.</span>
+              </div>
             </div>
             <div class="bead-summary" id="bead-summary" aria-live="polite">
               <div class="bead-summary-header">
@@ -272,6 +293,16 @@
               <button class="btn btn-primary" id="download-pdf-btn">📄 Download PDF</button>
               <button class="btn btn-secondary" id="copy-list-btn">📋 Copy shopping list</button>
               <button class="btn btn-secondary" id="reset-btn">↺ Try another photo</button>
+            </div>
+            <div class="lead-magnet" aria-labelledby="home-free-patterns-heading">
+              <h3 id="home-free-patterns-heading">Get 10 free beginner bead patterns</h3>
+              <p>Printable PDF patterns for easy family craft projects. No spam, just cute bead ideas.</p>
+              <form class="lead-form" action="https://buttondown.com/api/emails/embed-subscribe/beadsnap" method="post" target="popupwindow" data-lead-form data-location="home-results">
+                <label class="sr-only" for="home-free-patterns-email">Email address</label>
+                <input id="home-free-patterns-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+                <button class="btn btn-primary" type="submit">Send me the free patterns</button>
+              </form>
+              <p class="lead-form-note"><a href="free-patterns.html" data-free-patterns-link data-location="home-results">See what is inside the free pack</a></p>
             </div>
           </div>
         </div>
@@ -309,26 +340,54 @@
       </div>
     </section>
 
+    <section class="product-cta-section" aria-labelledby="pattern-pack-heading">
+      <div class="container">
+        <div class="product-cta-box">
+          <h2 id="pattern-pack-heading">Want a cleaner automatic pattern?</h2>
+          <p>The free tool is great for quick photo-to-bead patterns. Pro Pattern is planned as a $5 one-time upgrade with smarter subject cropping, better color matching, larger sizes, and cleaner printable PDFs.</p>
+          <a href="custom-pattern.html" class="btn btn-primary" data-pro-pattern-link data-location="home-pro-cta">Explore Pro Pattern</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer" role="contentinfo">
     <div class="container">
       <div class="footer-links">
         <a href="blog.html">Blog</a>
+        <a href="free-patterns.html" data-free-patterns-link data-location="footer">Free Patterns</a>
+        <a href="custom-pattern.html" data-pro-pattern-link data-location="footer">Pro Pattern</a>
         <a href="about.html">About</a>
         <a href="privacy.html">Privacy</a>
         <a href="contact.html">Contact</a>
         <a href="mailto:chweha7@gmail.com">chweha7@gmail.com</a>
       </div>
       <p>&copy; <span id="year"></span> BeadSnap. Made with patience and a lot of tiny plastic beads.</p>
+      <p>BeadSnap is an independent tool and is not affiliated with Perler, Hama, Artkal, or any bead brand.</p>
     </div>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
   <script>
-    const dropzone=document.getElementById('dropzone'),fileInput=document.getElementById('file-input'),previewArea=document.getElementById('preview-area'),originalPreview=document.getElementById('original-preview'),outputCanvas=document.getElementById('output-canvas'),sizeSlider=document.getElementById('size-slider'),sizeValue=document.getElementById('size-value'),downloadBtn=document.getElementById('download-btn'),downloadPdfBtn=document.getElementById('download-pdf-btn'),copyListBtn=document.getElementById('copy-list-btn'),resetBtn=document.getElementById('reset-btn'),exampleThumbs=document.querySelectorAll('.example-thumb'),totalBeadsEl=document.getElementById('total-beads'),beadColorListEl=document.getElementById('bead-color-list');
+    const dropzone=document.getElementById('dropzone'),fileInput=document.getElementById('file-input'),previewArea=document.getElementById('preview-area'),originalPreview=document.getElementById('original-preview'),outputCanvas=document.getElementById('output-canvas'),sizeSlider=document.getElementById('size-slider'),sizeValue=document.getElementById('size-value'),cropToggle=document.getElementById('crop-toggle'),downloadBtn=document.getElementById('download-btn'),downloadPdfBtn=document.getElementById('download-pdf-btn'),copyListBtn=document.getElementById('copy-list-btn'),resetBtn=document.getElementById('reset-btn'),exampleThumbs=document.querySelectorAll('.example-thumb'),totalBeadsEl=document.getElementById('total-beads'),beadColorListEl=document.getElementById('bead-color-list');
     let sourceImage=null,lastCountsByCode=new Map();
     document.getElementById('year').textContent=new Date().getFullYear();
+    function trackEvent(name,params={}){
+      if(typeof gtag==='function')gtag('event',name,params);
+    }
+    document.querySelectorAll('[data-free-patterns-link]').forEach(link=>{
+      link.addEventListener('click',()=>trackEvent('click_free_patterns',{location:link.dataset.location||'unknown'}));
+    });
+    document.querySelectorAll('[data-pro-pattern-link]').forEach(link=>{
+      link.addEventListener('click',()=>trackEvent('click_pro_pattern',{location:link.dataset.location||'unknown'}));
+    });
+    document.querySelectorAll('[data-lead-form]').forEach(form=>{
+      form.addEventListener('submit',()=>{
+        trackEvent('subscribe_free_patterns',{location:form.dataset.location||'unknown',provider:'buttondown'});
+        window.open('https://buttondown.com/beadsnap','popupwindow');
+      });
+    });
 
     const PERLER_PALETTE=[
       {code:'P01',name:'White',hex:'#FFFFFF'},{code:'P02',name:'Cream',hex:'#F5EEDC'},
@@ -351,18 +410,57 @@
       {code:'P35',name:'Peach',hex:'#FFCBA4'},{code:'P36',name:'Light Tan',hex:'#F5DEB3'},
       {code:'P37',name:'Hot Coral',hex:'#FF6F61'},{code:'P38',name:'Sand',hex:'#C2B280'}
     ];
-    PERLER_PALETTE.forEach(p=>{p.r=parseInt(p.hex.slice(1,3),16);p.g=parseInt(p.hex.slice(3,5),16);p.b=parseInt(p.hex.slice(5,7),16)});
+    function srgbToLinear(v){v/=255;return v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4)}
+    function rgbToLab(r,g,b){
+      const rl=srgbToLinear(r),gl=srgbToLinear(g),bl=srgbToLinear(b);
+      let x=(rl*.4124+gl*.3576+bl*.1805)/.95047;
+      let y=(rl*.2126+gl*.7152+bl*.0722);
+      let z=(rl*.0193+gl*.1192+bl*.9505)/1.08883;
+      const f=t=>t>.008856?Math.cbrt(t):(7.787*t)+(16/116);
+      x=f(x);y=f(y);z=f(z);
+      return {l:(116*y)-16,a:500*(x-y),b:200*(y-z)}
+    }
+    function rgbToHsl(r,g,b){
+      r/=255;g/=255;b/=255;
+      const max=Math.max(r,g,b),min=Math.min(r,g,b),l=(max+min)/2;
+      if(max===min)return{h:0,s:0,l};
+      const d=max-min,s=l>.5?d/(2-max-min):d/(max+min);
+      let h;
+      if(max===r)h=(g-b)/d+(g<b?6:0);
+      else if(max===g)h=(b-r)/d+2;
+      else h=(r-g)/d+4;
+      return{h:h*60,s,l}
+    }
+    function tuneColorForBeads(r,g,b){
+      const avg=(r+g+b)/3;
+      r=avg+(r-avg)*1.12;g=avg+(g-avg)*1.12;b=avg+(b-avg)*1.12;
+      r=(r-128)*1.04+128;g=(g-128)*1.04+128;b=(b-128)*1.04+128;
+      return [Math.max(0,Math.min(255,Math.round(r))),Math.max(0,Math.min(255,Math.round(g))),Math.max(0,Math.min(255,Math.round(b)))]
+    }
+    PERLER_PALETTE.forEach(p=>{
+      p.r=parseInt(p.hex.slice(1,3),16);p.g=parseInt(p.hex.slice(3,5),16);p.b=parseInt(p.hex.slice(5,7),16);
+      const lab=rgbToLab(p.r,p.g,p.b),hsl=rgbToHsl(p.r,p.g,p.b);
+      p.l=lab.l;p.a=lab.a;p.labB=lab.b;p.h=hsl.h;p.s=hsl.s;
+    });
     const PALETTE_BY_CODE=new Map(PERLER_PALETTE.map(p=>[p.code,p]));
 
     const nearestCache=new Map();
     function nearestPerlerColor(r,g,b){
+      [r,g,b]=tuneColorForBeads(r,g,b);
       const key=(r<<16)|(g<<8)|b;
       const hit=nearestCache.get(key);
       if(hit!==undefined)return hit;
+      const lab=rgbToLab(r,g,b),hsl=rgbToHsl(r,g,b);
       let bestIdx=0,bestDist=Infinity;
       for(let i=0;i<PERLER_PALETTE.length;i++){
-        const p=PERLER_PALETTE[i],dr=r-p.r,dg=g-p.g,db=b-p.b;
-        const d=dr*dr*3+dg*dg*4+db*db*2;
+        const p=PERLER_PALETTE[i],dl=lab.l-p.l,da=lab.a-p.a,db=lab.b-p.labB;
+        let d=dl*dl*1.15+da*da+db*db;
+        const hueDiff=Math.abs(((hsl.h-p.h+180)%360)-180);
+        if(hsl.s>.18&&p.s>.18)d+=hueDiff*hueDiff*.18;
+        const inputLooksYellow=hsl.h>=34&&hsl.h<=72&&hsl.s>.22&&r>=g*.82;
+        const candidateLooksGreen=p.code==='P13'||p.code==='P14'||p.code==='P15'||p.code==='P16'||p.code==='P17';
+        if(inputLooksYellow&&candidateLooksGreen)d+=2600;
+        if(hsl.l<.18&&p.code!=='P34'&&p.code!=='P33'&&p.code!=='P30')d+=900;
         if(d<bestDist){bestDist=d;bestIdx=i}
       }
       nearestCache.set(key,bestIdx);return bestIdx;
@@ -378,6 +476,7 @@
 
     function handleFile(file){
       if(!file.type.startsWith('image/')){alert('Please upload an image file (PNG, JPG, or WebP).');return}
+      trackEvent('upload_photo',{source:'file'});
       const reader=new FileReader();
       reader.onload=e=>loadImageFromSrc(e.target.result);
       reader.readAsDataURL(file);
@@ -385,19 +484,84 @@
     function loadImageFromSrc(src){
       const img=new Image();
       img.crossOrigin='anonymous';
-      img.onload=()=>{sourceImage=img;originalPreview.src=src;previewArea.classList.add('is-active');renderPattern();previewArea.scrollIntoView({behavior:'smooth',block:'start'})};
+      img.onload=()=>{sourceImage=img;originalPreview.src=src;previewArea.classList.add('is-active');renderPattern();trackEvent('generate_pattern');previewArea.scrollIntoView({behavior:'smooth',block:'start'})};
       img.onerror=()=>{alert('Sorry, we could not load that image. Please try another.')};
       img.src=src;
     }
 
-    exampleThumbs.forEach(thumb=>{thumb.addEventListener('click',()=>{const src=thumb.getAttribute('data-src');if(src)loadImageFromSrc(src)})});
+    exampleThumbs.forEach(thumb=>{thumb.addEventListener('click',()=>{const src=thumb.getAttribute('data-src');if(src){trackEvent('upload_photo',{source:'example'});loadImageFromSrc(src)}})});
 
     sizeSlider.addEventListener('input',()=>{sizeValue.textContent=sizeSlider.value;if(sourceImage)renderPattern()});
+    cropToggle.addEventListener('change',()=>{if(sourceImage)renderPattern()});
+
+    function estimateSubjectCrop(img){
+      const sampleMax=96;
+      const scale=Math.min(sampleMax/img.naturalWidth,sampleMax/img.naturalHeight,1);
+      const sw=Math.max(1,Math.round(img.naturalWidth*scale)),sh=Math.max(1,Math.round(img.naturalHeight*scale));
+      const sample=document.createElement('canvas');
+      sample.width=sw;sample.height=sh;
+      const sctx=sample.getContext('2d',{willReadFrequently:true});
+      sctx.imageSmoothingEnabled=true;
+      sctx.drawImage(img,0,0,sw,sh);
+      const data=sctx.getImageData(0,0,sw,sh).data;
+      const border=[];
+      for(let y=0;y<sh;y++){for(let x=0;x<sw;x++){
+        if(x<3||y<3||x>=sw-3||y>=sh-3){
+          const o=(y*sw+x)*4;border.push([data[o],data[o+1],data[o+2]]);
+        }
+      }}
+      border.sort((a,b)=>(a[0]+a[1]+a[2])-(b[0]+b[1]+b[2]));
+      const mid=border[Math.floor(border.length/2)]||[0,0,0];
+      const bgLab=rgbToLab(mid[0],mid[1],mid[2]);
+      const bgHsl=rgbToHsl(mid[0],mid[1],mid[2]);
+      const mask=new Uint8Array(sw*sh);
+      let active=0;
+      for(let y=0;y<sh;y++){for(let x=0;x<sw;x++){
+        const i=y*sw+x,o=i*4,r=data[o],g=data[o+1],b=data[o+2];
+        const lab=rgbToLab(r,g,b),hsl=rgbToHsl(r,g,b);
+        const dl=lab.l-bgLab.l,da=lab.a-bgLab.a,db=lab.b-bgLab.b;
+        const delta=Math.sqrt(dl*dl+da*da+db*db);
+        const hueDiff=Math.abs(((hsl.h-bgHsl.h+180)%360)-180);
+        const isDifferent=delta>18||(hsl.s>.32&&hueDiff>18&&Math.abs(hsl.l-bgHsl.l)>.04);
+        const borderPixel=x<2||y<2||x>=sw-2||y>=sh-2;
+        if(isDifferent&&!borderPixel){mask[i]=1;active++}
+      }}
+      if(active<sw*sh*.015||active>sw*sh*.82)return{x:0,y:0,w:img.naturalWidth,h:img.naturalHeight,activeRatio:active/(sw*sh)};
+
+      const seen=new Uint8Array(sw*sh);
+      let best=null;
+      const stack=[];
+      for(let i=0;i<mask.length;i++){
+        if(!mask[i]||seen[i])continue;
+        let count=0,minX=sw,minY=sh,maxX=0,maxY=0;
+        stack.length=0;stack.push(i);seen[i]=1;
+        while(stack.length){
+          const cur=stack.pop(),x=cur%sw,y=Math.floor(cur/sw);
+          count++;if(x<minX)minX=x;if(x>maxX)maxX=x;if(y<minY)minY=y;if(y>maxY)maxY=y;
+          const neighbors=[cur-1,cur+1,cur-sw,cur+sw];
+          for(const n of neighbors){
+            if(n<0||n>=mask.length||seen[n]||!mask[n])continue;
+            if((n===cur-1&&x===0)||(n===cur+1&&x===sw-1))continue;
+            seen[n]=1;stack.push(n);
+          }
+        }
+        if(count>20&&(!best||count>best.count))best={count,minX,minY,maxX,maxY};
+      }
+      if(!best||best.count<active*.18)return{x:0,y:0,w:img.naturalWidth,h:img.naturalHeight,activeRatio:active/(sw*sh)};
+      const pad=Math.max(4,Math.round(Math.max(best.maxX-best.minX,best.maxY-best.minY)*.18));
+      let x1=Math.max(0,best.minX-pad),y1=Math.max(0,best.minY-pad),x2=Math.min(sw-1,best.maxX+pad),y2=Math.min(sh-1,best.maxY+pad);
+      const minSide=Math.min(sw,sh)*.34;
+      if((x2-x1)<minSide){const extra=(minSide-(x2-x1))/2;x1=Math.max(0,Math.floor(x1-extra));x2=Math.min(sw-1,Math.ceil(x2+extra))}
+      if((y2-y1)<minSide){const extra=(minSide-(y2-y1))/2;y1=Math.max(0,Math.floor(y1-extra));y2=Math.min(sh-1,Math.ceil(y2+extra))}
+      const inv=1/scale;
+      return{x:Math.round(x1*inv),y:Math.round(y1*inv),w:Math.round((x2-x1+1)*inv),h:Math.round((y2-y1+1)*inv),activeRatio:active/(sw*sh)}
+    }
 
     function renderPattern(){
       if(!sourceImage)return;
       const beadsPerSide=parseInt(sizeSlider.value,10);
-      const aspect=sourceImage.naturalWidth/sourceImage.naturalHeight;
+      const crop=cropToggle.checked?estimateSubjectCrop(sourceImage):{x:0,y:0,w:sourceImage.naturalWidth,h:sourceImage.naturalHeight};
+      const aspect=crop.w/crop.h;
       let gridW,gridH;
       if(aspect>=1){gridW=beadsPerSide;gridH=Math.max(1,Math.round(beadsPerSide/aspect))}
       else{gridH=beadsPerSide;gridW=Math.max(1,Math.round(beadsPerSide*aspect))}
@@ -406,7 +570,7 @@
       tinyCanvas.width=gridW;tinyCanvas.height=gridH;
       const tinyCtx=tinyCanvas.getContext('2d');
       tinyCtx.imageSmoothingEnabled=true;
-      tinyCtx.drawImage(sourceImage,0,0,gridW,gridH);
+      tinyCtx.drawImage(sourceImage,crop.x,crop.y,crop.w,crop.h,0,0,gridW,gridH);
 
       const imgData=tinyCtx.getImageData(0,0,gridW,gridH);
       const pixels=imgData.data;
@@ -470,20 +634,23 @@
       const lines=sorted.map(([code,count])=>{const info=PALETTE_BY_CODE.get(code);return`- ${code} ${info?info.name:'?'}: ${count} beads`});
       const text=`BeadSnap pattern — shopping list (${total.toLocaleString()} beads total):\n${lines.join('\n')}`;
       try{await navigator.clipboard.writeText(text)}catch{const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;left:-9999px';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta)}
+      trackEvent('copy_shopping_list');
       copyListBtn.classList.add('is-copied');const orig=copyListBtn.textContent;copyListBtn.textContent='✓ Copied!';
       setTimeout(()=>{copyListBtn.classList.remove('is-copied');copyListBtn.textContent=orig},1500);
     });
 
     downloadBtn.addEventListener('click',()=>{
       if(!sourceImage)return;
+      trackEvent('download_png');
       try{const link=document.createElement('a');link.download='beadsnap-pattern.png';link.href=outputCanvas.toDataURL('image/png');link.click()}
       catch(err){alert('Could not download this image. If you loaded an example, try uploading your own photo instead.')}
     });
 
     downloadPdfBtn.addEventListener('click',()=>{
       if(!outputCanvas||outputCanvas.width===0)return;
+      trackEvent('download_pdf');
       const {jsPDF}=window.jspdf;
-      const pdf=new jsPDF({orientation:outputCanvas.width>outputCanvas.height?'landscape':'portrait',unit:'px',format:[outputCanvas.width+40,outputCanvas.height+40]});
+      const pdf=new jsPDF({orientation:outputCanvas.width>outputCanvas.height?'landscape':'portrait',unit:'px',format:[outputCanvas.width+40,outputCanvas.height+72]});
       pdf.addImage(outputCanvas.toDataURL('image/png'),'PNG',20,20,outputCanvas.width,outputCanvas.height);
       if(lastCountsByCode.size>0){
         const sorted=[...lastCountsByCode.entries()].sort((a,b)=>{if(b[1]!==a[1])return b[1]-a[1];return a[0].localeCompare(b[0])});
@@ -506,6 +673,15 @@
         const total=sorted.reduce((s,[,c])=>s+c,0);
         pdf.setFontSize(12);pdf.setTextColor('#E85F4E');
         pdf.text(`Total: ${total.toLocaleString()} beads`,20,lineY+12);
+      }
+      const pageCount=pdf.internal.getNumberOfPages();
+      for(let i=1;i<=pageCount;i++){
+        pdf.setPage(i);
+        const pageH=pdf.internal.pageSize.getHeight();
+        pdf.setFontSize(9);pdf.setTextColor('#E85F4E');
+        pdf.text('Made with BeadSnap - Free photo to bead pattern maker',20,pageH-24);
+        pdf.setTextColor('#6B635C');
+        pdf.text('Need more printable patterns? Visit https://beadsnap.app/free-patterns.html',20,pageH-12);
       }
       pdf.save('beadsnap-pattern.pdf');
     });

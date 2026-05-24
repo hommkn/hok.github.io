@@ -110,6 +110,14 @@
     .btn-primary{background:var(--coral);color:#fff;box-shadow:0 4px 0 var(--coral-dark)}
     .btn-primary:hover{background:var(--coral-dark);transform:translateY(-2px);box-shadow:0 6px 0 var(--coral-dark);text-decoration:none;color:#fff}
     .btn-primary:active{transform:translateY(2px);box-shadow:0 0 0 var(--coral-dark)}
+    .lead-magnet{margin:32px 0;padding:24px 28px;border:2px solid var(--line);border-radius:var(--radius);background:var(--bg-cream-soft);text-align:center}
+    .lead-magnet h3{margin-bottom:6px;color:var(--ink)}
+    .lead-magnet p{max-width:560px;margin:0 auto 16px}
+    .lead-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+    .lead-form input[type="email"]{min-height:48px;min-width:260px;flex:1 1 260px;max-width:360px;border:2px solid var(--line);border-radius:999px;padding:0 18px;font:inherit;color:var(--ink);background:#fff}
+    .lead-form-note{font-size:.88rem;margin:0;color:var(--ink-soft)}
+    .lead-form-note a{font-weight:800}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
     .faq-item{margin-bottom:24px}
     .faq-item h3{margin-bottom:6px}
@@ -142,6 +150,8 @@
       <nav class="site-nav" aria-label="Main navigation">
         <a href="index.html">Home</a>
         <a href="blog.html" class="is-active">Blog</a>
+        <a href="free-patterns.html" data-free-patterns-link data-location="nav">Free Patterns</a>
+        <a href="custom-pattern.html" data-pro-pattern-link data-location="nav">Pro Pattern</a>
         <a href="about.html">About</a>
         <a href="privacy.html">Privacy</a>
         <a href="contact.html">Contact</a>
@@ -370,6 +380,17 @@
 
         <p>BeadSnap was built to make the hardest part — turning a photo into a buildable pattern — as easy as dragging and dropping. The rest is just you, your family, and a pile of colorful beads around the kitchen table.</p>
 
+        <div class="lead-magnet" aria-labelledby="blog-free-patterns-heading">
+          <h3 id="blog-free-patterns-heading">Get 10 free beginner bead patterns</h3>
+          <p>Printable PDF patterns for easy family craft projects. No spam, just cute bead ideas.</p>
+          <form class="lead-form" action="https://buttondown.com/api/emails/embed-subscribe/beadsnap" method="post" target="popupwindow" data-lead-form data-location="blog-end">
+            <label class="sr-only" for="blog-free-patterns-email">Email address</label>
+            <input id="blog-free-patterns-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <button class="btn btn-primary" type="submit">Send me the free patterns</button>
+          </form>
+          <p class="lead-form-note"><a href="free-patterns.html" data-free-patterns-link data-location="blog-end">Preview the free pattern pack</a></p>
+        </div>
+
         <div class="highlight-box">
           <p><strong>No signup. No download. 100% free.</strong></p>
           <a href="index.html#tool" class="btn btn-primary">Start making your bead pattern now →</a>
@@ -385,15 +406,35 @@
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
+        <a href="free-patterns.html" data-free-patterns-link data-location="footer">Free Patterns</a>
+        <a href="custom-pattern.html" data-pro-pattern-link data-location="footer">Pro Pattern</a>
         <a href="about.html">About</a>
         <a href="privacy.html">Privacy</a>
         <a href="contact.html">Contact</a>
         <a href="mailto:chweha7@gmail.com">chweha7@gmail.com</a>
       </div>
       <p>&copy; <span id="year"></span> BeadSnap. Made with patience and a lot of tiny plastic beads.</p>
+      <p>BeadSnap is an independent tool and is not affiliated with Perler, Hama, Artkal, or any bead brand.</p>
     </div>
   </footer>
 
-  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+  <script>
+    document.getElementById('year').textContent=new Date().getFullYear();
+    function trackEvent(name,params={}){
+      if(typeof gtag==='function')gtag('event',name,params);
+    }
+    document.querySelectorAll('[data-free-patterns-link]').forEach(link=>{
+      link.addEventListener('click',()=>trackEvent('click_free_patterns',{location:link.dataset.location||'unknown'}));
+    });
+    document.querySelectorAll('[data-pro-pattern-link]').forEach(link=>{
+      link.addEventListener('click',()=>trackEvent('click_pro_pattern',{location:link.dataset.location||'unknown'}));
+    });
+    document.querySelectorAll('[data-lead-form]').forEach(form=>{
+      form.addEventListener('submit',()=>{
+        trackEvent('subscribe_free_patterns',{location:form.dataset.location||'unknown',provider:'buttondown'});
+        window.open('https://buttondown.com/beadsnap','popupwindow');
+      });
+    });
+  </script>
 </body>
 </html>
