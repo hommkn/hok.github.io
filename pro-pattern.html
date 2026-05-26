@@ -214,25 +214,37 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
   <script>
-    // Show purchase success banner
+    // Show purchase success banner.
+    // Creem may return either our purchase=success flag or signed checkout/order params.
     (function(){
       const params=new URLSearchParams(window.location.search);
-      if(params.get('purchase')==='success'){
+      const hasCreemSuccess=params.get('checkout_id')||params.get('order_id')||params.get('signature');
+      if(params.get('purchase')==='success'||hasCreemSuccess){
         const banner=document.getElementById('purchase-banner');
         if(banner){banner.classList.add('is-shown')}
+        localStorage.setItem('beadsnap_pro_access','true');
         // Track purchase completed
         if(typeof gtag==='function'){
           gtag('event','purchase',{
             currency:'USD',
             value:5.00,
-            transaction_id:'pro-pattern-'+Date.now(),
+            transaction_id:params.get('checkout_id')||params.get('order_id')||('pro-pattern-'+Date.now()),
             items:[{item_id:'pro-pattern',item_name:'BeadSnap Pro Pattern',price:5.00,quantity:1}]
           });
         }
         // Clean URL without reloading
         const url=new URL(window.location);
         url.searchParams.delete('purchase');
+        url.searchParams.delete('checkout_id');
+        url.searchParams.delete('order_id');
+        url.searchParams.delete('product_id');
+        url.searchParams.delete('customer_id');
+        url.searchParams.delete('subscription_id');
+        url.searchParams.delete('signature');
         window.history.replaceState({},'',url);
+      }else if(localStorage.getItem('beadsnap_pro_access')==='true'){
+        const banner=document.getElementById('purchase-banner');
+        if(banner){banner.classList.add('is-shown')}
       }
     })();
   </script>

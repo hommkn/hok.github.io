@@ -4,3 +4,5 @@ Thumbs.db
 node_modules/
 
 .claude/
+workers/node_modules/
+workers/.wrangler/

@@ -2,26 +2,37 @@
 
 Creem is the planned checkout provider for paid BeadSnap upgrades.
 
-Current status:
-
-```text
-Creem account: pending review
-```
-
 Current site behavior:
 
-- `custom-pattern.html` now positions the paid offer as an automatic `Pro Pattern` generator.
-- Buttondown collects launch interest while Creem is pending review.
+- `custom-pattern.html` positions the paid offer as an automatic `Pro Pattern` generator.
+- The purchase button first tries to create a checkout through `https://api.beadsnap.app/checkout`.
+- If the checkout API is unavailable, the button falls back to the static Creem payment link.
+- `pro-pattern.html` recognizes both `?purchase=success` and Creem signed return params such as `checkout_id`, `order_id`, and `signature`.
 - No paid PDF file is exposed publicly.
-- No checkout link is active yet.
 
-When Creem is approved:
+Required production setup:
 
-1. Create a product for `BeadSnap Pro Pattern`.
+1. Create a Creem product for `BeadSnap Pro Pattern`.
 2. Set the price to `$5` one-time.
-3. Configure the success URL to the paid generator page, for example `https://beadsnap.app/pro-pattern.html`.
-4. Replace the main waitlist CTA on `custom-pattern.html` with the Creem checkout URL.
-5. Keep the Buttondown form as a secondary launch-update list.
+3. Configure the product success URL to `https://beadsnap.app/pro-pattern.html?purchase=success`.
+4. Deploy the Cloudflare Worker in `workers/`.
+5. Point `api.beadsnap.app` to that Worker, or update `CHECKOUT_ENDPOINT` in `custom-pattern.html` to the deployed Worker URL.
+6. Set the Worker secrets:
+
+```powershell
+cd C:\Users\hok\Desktop\beadsnap\workers
+.\node_modules\.bin\wrangler.cmd secret put CREEM_API_KEY
+.\node_modules\.bin\wrangler.cmd secret put CREEM_WEBHOOK_SECRET
+```
+
+7. Optional email notification secrets:
+
+```powershell
+.\node_modules\.bin\wrangler.cmd secret put RESEND_API_KEY
+.\node_modules\.bin\wrangler.cmd secret put NOTIFY_EMAIL
+```
+
+8. Configure the Creem webhook URL as `https://api.beadsnap.app/webhook`.
 
 Suggested Creem product copy:
 
