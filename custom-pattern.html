@@ -161,7 +161,6 @@
     function trackEvent(name,params={}){
       if(typeof gtag==='function')gtag('event',name,params);
     }
-    const CHECKOUT_ENDPOINT='https://beadsnap-webhook.besdsnap.workers.dev/checkout';
     document.querySelectorAll('[data-pro-pattern-link]').forEach(link=>{
       link.addEventListener('click',()=>trackEvent('click_pro_pattern',{location:link.dataset.location||'unknown'}));
     });
@@ -171,41 +170,20 @@
         window.open('https://buttondown.com/beadsnap','popupwindow');
       });
     });
-    // Purchase button: ask the Worker for a checkout with a known success URL.
+    // Purchase button: open the Creem product payment link directly.
     const buyBtn=document.querySelector('[data-pro-pattern-link][data-location="purchase"]');
     if(buyBtn){
-      buyBtn.addEventListener('click',async function(e){
+      buyBtn.addEventListener('click',function(e){
         e.preventDefault();
-        const fallbackUrl=this.getAttribute('href');
-        const originalText=this.textContent;
+        const checkoutUrl=this.getAttribute('href');
         const status=document.getElementById('checkout-status');
-        this.textContent='Opening secure checkout...';
-        this.setAttribute('aria-busy','true');
-        if(status)status.textContent='Creating your secure Creem checkout...';
+        if(status)status.textContent='Opening Creem checkout...';
         trackEvent('begin_checkout',{
           currency:'USD',
           value:5.00,
           items:[{item_id:'pro-pattern',item_name:'BeadSnap Pro Pattern',price:5.00,quantity:1}]
         });
-        try{
-          const res=await fetch(CHECKOUT_ENDPOINT,{
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({source:'custom-pattern-page'})
-          });
-          if(!res.ok)throw new Error('checkout_api_'+res.status);
-          const data=await res.json();
-          if(!data.url)throw new Error('missing_checkout_url');
-          window.location.href=data.url;
-        }catch(err){
-          console.warn('Checkout API unavailable; using static Creem link.',err);
-          trackEvent('checkout_api_fallback',{reason:String(err&&err.message||err)});
-          if(status)status.textContent='Opening Creem checkout directly...';
-          window.location.href=fallbackUrl;
-        }finally{
-          this.textContent=originalText;
-          this.removeAttribute('aria-busy');
-        }
+        window.location.href=checkoutUrl;
       });
     }
   </script>
