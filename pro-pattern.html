@@ -220,6 +220,15 @@
       if(params.get('purchase')==='success'){
         const banner=document.getElementById('purchase-banner');
         if(banner){banner.classList.add('is-shown')}
+        // Track purchase completed
+        if(typeof gtag==='function'){
+          gtag('event','purchase',{
+            currency:'USD',
+            value:5.00,
+            transaction_id:'pro-pattern-'+Date.now(),
+            items:[{item_id:'pro-pattern',item_name:'BeadSnap Pro Pattern',price:5.00,quantity:1}]
+          });
+        }
         // Clean URL without reloading
         const url=new URL(window.location);
         url.searchParams.delete('purchase');

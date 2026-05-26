@@ -160,6 +160,13 @@
     function trackEvent(name,params={}){
       if(typeof gtag==='function')gtag('event',name,params);
     }
+    function trackAndNavigate(name,params,url){
+      if(typeof gtag==='function'){
+        gtag('event',name,Object.assign({event_callback:function(){window.location.href=url}},params));
+      }else{
+        window.location.href=url;
+      }
+    }
     document.querySelectorAll('[data-pro-pattern-link]').forEach(link=>{
       link.addEventListener('click',()=>trackEvent('click_pro_pattern',{location:link.dataset.location||'unknown'}));
     });
@@ -169,6 +176,18 @@
         window.open('https://buttondown.com/beadsnap','popupwindow');
       });
     });
+    // Purchase button: track begin_checkout before navigating to Creem
+    const buyBtn=document.querySelector('[data-pro-pattern-link][data-location="purchase"]');
+    if(buyBtn){
+      buyBtn.addEventListener('click',function(e){
+        e.preventDefault();
+        trackAndNavigate('begin_checkout',{
+          currency:'USD',
+          value:5.00,
+          items:[{item_id:'pro-pattern',item_name:'BeadSnap Pro Pattern',price:5.00,quantity:1}]
+        },this.getAttribute('href'));
+      });
+    }
   </script>
 </body>
 </html>
