@@ -80,6 +80,11 @@
     footer a{color:var(--bg)}
     footer p{color:rgba(250,246,240,.72);margin-bottom:8px}
     .footer-links{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+    .purchase-banner{display:none;background:var(--teal);color:#fff;text-align:center;padding:18px 24px;border-radius:var(--radius);margin:0 0 24px;animation:fadeIn .4s}
+    .purchase-banner.is-shown{display:block}
+    .purchase-banner h2{color:#fff;margin-bottom:4px}
+    .purchase-banner p{color:rgba(255,255,255,.9);margin:0}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
     @media(max-width:760px){.preview-grid{grid-template-columns:1fr}.control-grid{grid-template-columns:1fr}.tool-card{padding:20px}nav a{padding:6px 10px;font-size:.82rem}}
   </style>
 </head>
@@ -98,6 +103,12 @@
   </header>
 
   <main>
+    <div class="container" style="padding-top:24px">
+      <div class="purchase-banner" id="purchase-banner" role="alert">
+        <h2>Payment successful — thank you!</h2>
+        <p>You now have full access to the Pro Pattern generator below. Bookmark this page to come back anytime.</p>
+      </div>
+    </div>
     <section class="hero">
       <div class="container">
         <span class="eyebrow">$5 Pro tool preview</span>
@@ -202,6 +213,20 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script>
+    // Show purchase success banner
+    (function(){
+      const params=new URLSearchParams(window.location.search);
+      if(params.get('purchase')==='success'){
+        const banner=document.getElementById('purchase-banner');
+        if(banner){banner.classList.add('is-shown')}
+        // Clean URL without reloading
+        const url=new URL(window.location);
+        url.searchParams.delete('purchase');
+        window.history.replaceState({},'',url);
+      }
+    })();
+  </script>
   <script>
     const $=id=>document.getElementById(id);
     const dropzone=$('dropzone'),fileInput=$('file-input'),previewArea=$('preview-area'),originalPreview=$('original-preview'),outputCanvas=$('output-canvas'),sizeSelect=$('size-select'),maxColorsSelect=$('max-colors-select'),detailSelect=$('detail-select'),cropToggle=$('crop-toggle'),backgroundToggle=$('background-toggle'),downloadPdfBtn=$('download-pdf-btn'),downloadPngBtn=$('download-png-btn'),downloadJpgBtn=$('download-jpg-btn'),copyListBtn=$('copy-list-btn'),resetBtn=$('reset-btn'),totalBeadsEl=$('total-beads'),totalColorsEl=$('total-colors'),colorListEl=$('color-list'),statusEl=$('status');
