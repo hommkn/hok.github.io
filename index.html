@@ -459,6 +459,11 @@
       return'pink';
     }
     function paletteFamily(p){return colorFamilyFromHsl({h:p.h,s:p.s,l:p.l/100})}
+    function looksLikeSkinColor(r,g,b,hsl){
+      hsl=hsl||rgbToHsl(r,g,b);
+      const h=(hsl.h+360)%360;
+      return (h<=52||h>=350)&&hsl.s>.10&&hsl.s<.50&&hsl.l>.28&&hsl.l<.88&&r>g*.90&&g>b*.72&&r>b*1.04;
+    }
     function colorDistanceToPalette(r,g,b,p){
       const lab=rgbToLab(r,g,b),hsl=rgbToHsl(r,g,b),dl=lab.l-p.l,da=lab.a-p.a,db=lab.b-p.labB;
       let d=dl*dl*1.15+da*da+db*db;
@@ -471,6 +476,11 @@
       const inputLooksYellow=hsl.h>=34&&hsl.h<=72&&hsl.s>.22&&r>=g*.82;
       const candidateLooksGreen=p.code==='P13'||p.code==='P14'||p.code==='P15'||p.code==='P16'||p.code==='P17';
       if(inputLooksYellow&&candidateLooksGreen)d+=2600;
+      if(looksLikeSkinColor(r,g,b,hsl)){
+        const skinCodes=['P02','P27','P28','P35','P36'];
+        if(!skinCodes.includes(p.code))d+=p.s<.18?2400:900;
+        if(p.code==='P31'||p.code==='P32'||p.code==='P33'||p.code==='P34')d+=2200;
+      }
       if(hsl.l<.18&&p.code!=='P34'&&p.code!=='P33'&&p.code!=='P30')d+=900;
       return d;
     }
@@ -607,6 +617,27 @@
       const cropW=x2-x1+1,cropH=y2-y1+1,cropAspect=cropW/cropH,imageAspect=sw/sh,cropArea=(cropW*cropH)/(sw*sh);
       const looksLikeBackgroundBand=cropAspect>imageAspect*1.35&&(cropW>sw*.7||cropArea<.55);
       if(looksLikeBackgroundBand)return{x:0,y:0,w:img.naturalWidth,h:img.naturalHeight,activeRatio:active/(sw*sh)};
+
+      let skinCount=0,skinMinX=sw,skinMinY=sh,skinMaxX=0,skinMaxY=0;
+      const scanBottom=Math.min(sh-1,Math.round(y1+cropH*.72));
+      for(let y=y1;y<=scanBottom;y++){for(let x=x1;x<=x2;x++){
+        const o=(y*sw+x)*4,r=data[o],g=data[o+1],b=data[o+2];
+        if(looksLikeSkinColor(r,g,b)){
+          skinCount++;
+          if(x<skinMinX)skinMinX=x;if(x>skinMaxX)skinMaxX=x;if(y<skinMinY)skinMinY=y;if(y>skinMaxY)skinMaxY=y;
+        }
+      }}
+      const skinW=skinMaxX-skinMinX+1,skinH=skinMaxY-skinMinY+1;
+      if(skinCount>18&&skinW>2&&skinH>2&&skinCount/(cropW*cropH)>.015){
+        const faceCx=(skinMinX+skinMaxX)/2,faceCy=(skinMinY+skinMaxY)/2;
+        let targetW=Math.max(skinW*3.4,skinH*2.5,sw*.36);
+        let targetH=targetW*1.18;
+        targetW=Math.min(targetW,sw*.82);targetH=Math.min(targetH,sh*.86);
+        let px1=Math.round(faceCx-targetW/2),py1=Math.round(faceCy-targetH*.36),px2=Math.round(px1+targetW),py2=Math.round(py1+targetH);
+        if(px1<0){px2-=px1;px1=0}if(py1<0){py2-=py1;py1=0}
+        if(px2>sw-1){px1-=px2-(sw-1);px2=sw-1}if(py2>sh-1){py1-=py2-(sh-1);py2=sh-1}
+        x1=Math.max(0,px1);y1=Math.max(0,py1);x2=Math.min(sw-1,px2);y2=Math.min(sh-1,py2);
+      }
       const inv=1/scale;
       return{x:Math.round(x1*inv),y:Math.round(y1*inv),w:Math.round((x2-x1+1)*inv),h:Math.round((y2-y1+1)*inv),activeRatio:active/(sw*sh)}
     }
